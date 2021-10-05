@@ -1,0 +1,125 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+//SPDX-License-Identifier: vlad
+
+contract CarShering {
+    
+    struct User {
+        string login;
+        string name;
+        uint role;
+        License license;
+        Trip trip;
+        Trip[] trips;
+    }
+    
+    struct License {
+        string drive_number;
+        uint srok;
+        string category;
+    }
+    
+    struct Trip {
+        uint idCar;
+        uint startTrip;
+        uint endTrip;
+        bool isTrip;
+    }
+    
+    struct Car {
+        string model;
+        uint mileage;
+        bool isRent;
+        Trip trip;
+    }
+    
+    address nullAdr =  0x0000000000000000000000000000000000000000;
+    
+    mapping( address => User) users;
+    mapping(string=>address) logins;
+    mapping(string=>License) licenses;
+    
+    Car[] cars;
+    
+    
+    constructor()public{
+        licenses["000"].drive_number = "000";
+        licenses["000"].srok = 1641859200;
+        licenses["000"].category = "A";
+        licenses["111"].drive_number = "111";
+        licenses["111"].srok = 1747008000;
+        licenses["111"].category = "B";
+        licenses["222"].drive_number = "222";
+        licenses["222"].srok = 1614384000;
+        licenses["222"].category = "C";
+        licenses["333"].drive_number = "333";
+        licenses["333"].srok = 1802476800;
+        licenses["333"].category = "A";
+        licenses["444"].drive_number = "444";
+        licenses["444"].srok = 1796947200;
+        licenses["444"].category = "B";
+        licenses["555"].drive_number = "555";
+        licenses["555"].srok = 1876953600;
+        licenses["555"].category = "C";
+        licenses["666"].drive_number = "666";
+        licenses["666"].srok = 1901145600;
+        licenses["666"].category = "A";
+        
+        cars.push(Car('mitsibisi', 20, false, Trip(0, 0, 0, false)));
+        cars.push(Car('audi', 20, false, Trip(0, 0, 0, false)));
+        cars.push(Car('bmv', 20, false, Trip(0, 0, 0, false)));
+    }
+
+    
+    function createUser(string memory _login, string memory _name) public {
+        require(users[msg.sender].role == 0, 'This address user in use');
+        require(logins[_login] == nullAdr, 'This login is use');
+        users[msg.sender].login = _login;
+        users[msg.sender].name = _name;
+        users[msg.sender].role = 1;
+        logins[_login] = msg.sender;
+    }
+    
+    function getUser() public view returns (User memory user){
+        return (users[msg.sender]);
+    }
+    
+    function getAddress(string memory _login) public view returns (address adr){
+        return (logins[_login]);
+    }
+    
+    function drive_add(string memory _drive_number, uint _srok, string memory _category) public returns (uint){
+        require(users[msg.sender].role != 0, 'You not registration');
+        require(keccak256(abi.encodePacked(licenses[_drive_number].category)) == keccak256(abi.encodePacked(_category)), 'Error category');
+        require(licenses[_drive_number].srok == _srok ,'Error srok');
+        users[msg.sender].license = licenses[_drive_number];
+    }
+    
+    function getCars() public view returns (Car[] memory) {
+        return cars;
+    }
+    
+    function rentCar(uint _idCar) public payable {
+        require(users[msg.sender].role != 0, 'You not registration');
+        require (!cars[_idCar].isRent, 'This car is rent');
+        require(msg.value == 100 ether, 'U not have balance 100 ether');
+        Trip memory trip = Trip(_idCar, block.timestamp, 0, true);
+        cars[_idCar].isRent = true;
+        cars[_idCar].trip = trip;
+        users[msg.sender].trip = trip;
+    }
+    
+    function endRent(uint _idCar) public payable {
+        require (cars[_idCar].isRent, 'This car not is rent');
+        require(users[msg.sender].trip.idCar == _idCar, 'U not rent this car');
+        uint summ = ((block.timestamp - cars[_idCar].trip.startTrip) / 10) * 1 ether;
+        payable(msg.sender).transfer(100 ether - summ);
+        cars[_idCar].isRent = false;
+        cars[_idCar].trip.endTrip = block.timestamp;
+        users[msg.sender].trip.endTrip = block.timestamp;
+        users[msg.sender].trip.isTrip = false;
+        users[msg.sender].trips.push(users[msg.sender].trip);
+    }
+
+    
+}
