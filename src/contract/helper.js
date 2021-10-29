@@ -2,7 +2,7 @@ import Web3 from "web3"
 import abiArray from "./abi"
 
 const web3 = new Web3("http://127.0.0.1:8545")
-const Contract = new web3.eth.Contract(abiArray, "0x80e3a5966C402D73F0D2c44B77F0bEF105f6190B");
+const Contract = new web3.eth.Contract(abiArray, "0x49658E43e040cc0f20c65b9EBd9967db8e766b82");
 
 const miner = '0x22E32984F35A8Cc9e4B79453870070298EAEeD87';
 const minerPassword = '123';
@@ -81,8 +81,26 @@ export const endRent = async (address, idCar) => {
 
 export const driveAdd = async (address, driveNumber, category, srok) => {
     try{
-        console.log(driveNumber, category, srok);
         await Contract.methods.drive_add(driveNumber, srok, category).send({from: address});
+    }
+    catch(e){
+        alert(e)
+    }
+}
+
+export const createCar = async (address, model, mileage) => {
+    try{
+        await Contract.methods.createCar(model, mileage).send({from: address});
+    }
+    catch(e){
+        alert(e)
+    }
+}
+
+export const getTrips = async (address) => {
+    try{
+        const cars = await Contract.methods.getTrips().call({from: address});
+        return cars;
     }
     catch(e){
         alert(e)

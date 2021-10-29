@@ -8,6 +8,24 @@ const abi = [
 		"inputs": [
 			{
 				"internalType": "string",
+				"name": "_model",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_mileage",
+				"type": "uint256"
+			}
+		],
+		"name": "createCar",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
 				"name": "_login",
 				"type": "string"
 			},
@@ -107,6 +125,16 @@ const abi = [
 					{
 						"components": [
 							{
+								"internalType": "address",
+								"name": "renter",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "idTrip",
+								"type": "uint256"
+							},
+							{
 								"internalType": "uint256",
 								"name": "idCar",
 								"type": "uint256"
@@ -133,6 +161,51 @@ const abi = [
 					}
 				],
 				"internalType": "struct CarShering.Car[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTrips",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "renter",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "idTrip",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "idCar",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startTrip",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "endTrip",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isTrip",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct CarShering.Trip[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -186,6 +259,16 @@ const abi = [
 					{
 						"components": [
 							{
+								"internalType": "address",
+								"name": "renter",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "idTrip",
+								"type": "uint256"
+							},
+							{
 								"internalType": "uint256",
 								"name": "idCar",
 								"type": "uint256"
@@ -212,6 +295,16 @@ const abi = [
 					},
 					{
 						"components": [
+							{
+								"internalType": "address",
+								"name": "renter",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "idTrip",
+								"type": "uint256"
+							},
 							{
 								"internalType": "uint256",
 								"name": "idCar",

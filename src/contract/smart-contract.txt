@@ -20,6 +20,8 @@ contract CarShering {
     }
     
     struct Trip {
+        address renter;
+        uint idTrip;
         uint idCar;
         uint startTrip;
         uint endTrip;
@@ -39,9 +41,9 @@ contract CarShering {
     mapping(string=>address) logins;
     mapping(string=>License) licenses;
     
+    Trip[] trips;
     Car[] cars;
-    
-    
+
     constructor()public{
         licenses["000"].drive_number = "000";
         licenses["000"].srok = 1641859200;
@@ -65,9 +67,14 @@ contract CarShering {
         licenses["666"].srok = 1901145600;
         licenses["666"].category = "A";
         
-        cars.push(Car('mitsibisi', 20, false, Trip(0, 0, 0, false)));
-        cars.push(Car('audi', 20, false, Trip(0, 0, 0, false)));
-        cars.push(Car('bmv', 20, false, Trip(0, 0, 0, false)));
+        cars.push(Car('mitsibisi', 20, false, Trip(nullAdr, 0, 0, 0, 0, false)));
+        cars.push(Car('audi', 20, false, Trip(nullAdr, 0, 0, 0, 0, false)));
+        cars.push(Car('bmv', 20, false, Trip(nullAdr, 0, 0, 0, 0, false)));
+        
+        users[0xb2Cce3336b805CA578057B78197aED135350d987].login = 'admin';
+        users[0xb2Cce3336b805CA578057B78197aED135350d987].role = 2;
+        users[0xb2Cce3336b805CA578057B78197aED135350d987].name = 'admin';
+        logins['admin'] = 0xb2Cce3336b805CA578057B78197aED135350d987;
     }
 
     
@@ -90,8 +97,9 @@ contract CarShering {
     
     function drive_add(string memory _drive_number, uint _srok, string memory _category) public returns (uint){
         require(users[msg.sender].role != 0, 'You not registration');
+        require( keccak256(abi.encodePacked(users[msg.sender].license.drive_number)) == keccak256(abi.encodePacked('')), 'You not registration');
         require(keccak256(abi.encodePacked(licenses[_drive_number].category)) == keccak256(abi.encodePacked(_category)), 'Error category');
-        require(licenses[_drive_number].srok == _srok ,'Error srok');
+        require((licenses[_drive_number].srok - 86400) < _srok && (licenses[_drive_number].srok + 86400) > _srok ,'Error srok');
         users[msg.sender].license = licenses[_drive_number];
     }
     
@@ -103,23 +111,35 @@ contract CarShering {
         require(users[msg.sender].role != 0, 'You not registration');
         require (!cars[_idCar].isRent, 'This car is rent');
         require(msg.value == 100 ether, 'U not have balance 100 ether');
-        Trip memory trip = Trip(_idCar, block.timestamp, 0, true);
+        Trip memory trip = Trip(msg.sender, trips.length, _idCar, block.timestamp, 0, true);
         cars[_idCar].isRent = true;
         cars[_idCar].trip = trip;
+        trips.push(trip);
         users[msg.sender].trip = trip;
     }
     
     function endRent(uint _idCar) public payable {
         require (cars[_idCar].isRent, 'This car not is rent');
-        require(users[msg.sender].trip.idCar == _idCar, 'U not rent this car');
+        require(users[msg.sender].role == 2 || cars[_idCar].trip.renter == msg.sender);
         uint summ = ((block.timestamp - cars[_idCar].trip.startTrip) / 10) * 1 ether;
-        payable(msg.sender).transfer(100 ether - summ);
+        payable(cars[_idCar].trip.renter).transfer(100 ether - summ);
         cars[_idCar].isRent = false;
         cars[_idCar].trip.endTrip = block.timestamp;
-        users[msg.sender].trip.endTrip = block.timestamp;
-        users[msg.sender].trip.isTrip = false;
-        users[msg.sender].trips.push(users[msg.sender].trip);
+        cars[_idCar].mileage += 5;
+        users[cars[_idCar].trip.renter].trip.endTrip = block.timestamp;
+        users[cars[_idCar].trip.renter].trip.isTrip = false;
+        users[cars[_idCar].trip.renter].trips.push(users[msg.sender].trip);
+        delete trips[users[msg.sender].trip.idTrip];
     }
-
+    
+    function getTrips()public view returns(Trip[] memory) {
+        require(users[msg.sender].role == 2, 'U not admin');
+        return trips;
+    }
+    
+    function createCar(string memory _model, uint _mileage) public {
+        require(users[msg.sender].role == 2, 'U not admin');
+        cars.push(Car(_model, _mileage, false, Trip(nullAdr, 0, 0, 0, 0, false)));
+    }
     
 }

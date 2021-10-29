@@ -3,6 +3,7 @@ import logo from '../../static/logo.png';
 import { Menu, Button } from 'antd';
 import { MailOutlined, AppstoreOutlined, LoginOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { getUser } from "../../contract/helper";
 import './style.css';
 
 class Header extends Component {
@@ -11,7 +12,16 @@ class Header extends Component {
     super(props);
     this.state = {
       current: 'cabinet',
+      role: 0,
     }
+  }
+
+  async componentDidMount() {
+    const address = localStorage.getItem('address');
+    const user = await getUser(address);
+    console.log(user);
+    const { role } = user;
+    this.setState({role});
   }
 
   setCurrent = (current) => {
@@ -24,7 +34,9 @@ class Header extends Component {
   }
 
   render() {
-    const { current } = this.state;
+
+    const { role } = this.state;
+    console.log(role);
 
     return (
       <div className="header">
@@ -35,6 +47,7 @@ class Header extends Component {
         <div className="header__menu">
           <Link className="header__link" to="/cabinet">Личный кабинет</Link>
           <Link className="header__link" to="/rent">Аренда</Link>
+          {role === '2' && <Link className="header__link" to="/admin">Админ панель</Link>}
         </div>
         <Button onClick={this.logout} type="dashed" icon={<LoginOutlined />} size="large">
           Logout

@@ -37,7 +37,6 @@ class Cabinet extends Component {
   getUser = async () => {
     const address = localStorage.getItem('address');
     const user = await getUser(address);
-    console.log(user);
     const { login, name, balance, trip, trips, license } = user;
     const newBalance = Math.floor((balance / 1000000000000000000) * 100) / 100;
     this.setState({ login, name, address, balance: newBalance, trip, trips, license });
@@ -96,6 +95,7 @@ class Cabinet extends Component {
     const { drive_number, category, srok } = license;
 
     const startDateTrip = new Date(startTrip * 1000);
+    const srokDate = new Date(srok * 1000);
 
     return (
       <div className="cabinet">
@@ -122,7 +122,7 @@ class Cabinet extends Component {
                     <div className="cabinet__licsense-title">Водительское удостоверение</div>
                     <div>Номер водительского удостоверения: {drive_number}</div>
                     <div>Категория: {category}</div>
-                    <div>Стаж: {srok} лет.</div>
+                    <div>Срок: {`${srokDate.getFullYear()}.${srokDate.getUTCMonth() + 1}.${srokDate.getDate()}`}</div>
                   </Fragment>
               }
             </div>
@@ -162,7 +162,7 @@ class Cabinet extends Component {
             </div>
             <div className="site-calendar-demo-card">
               Дата выдачи:
-              <Calendar fullscreen={false} onChange={(e) => { console.log(e); this.setState({ driveAddNumber: Number(e._d.getTime()/1000).toFixed() }); }} />
+              <Calendar fullscreen={false} onChange={(e) => { this.setState({ driveAddSrok: Number(e._d.getTime()/1000).toFixed() }); }} />
             </div>
           </div>
         </Modal>

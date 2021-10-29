@@ -34,7 +34,6 @@ class Registration extends Component {
         }}
         validationSchema={schema}
         onSubmit={(values) => {
-          console.log(values);
           this.onSubmit(values);
         }}
         render={({

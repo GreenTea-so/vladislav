@@ -1,6 +1,6 @@
 import { Component } from "react";
-import { Button } from "antd";
-import { getCars, rentCar } from "../../contract/helper";
+import { Button, Input } from "antd";
+import { getCars, rentCar, getUser, createCar } from "../../contract/helper";
 import './style.css';
 
 class Rent extends Component {
@@ -9,13 +9,20 @@ class Rent extends Component {
     super();
     this.state = {
       cars: [],
+      role: 0,
+      createCarMileage: '',
+      createCarModel: '',
     };
   }
 
   async componentDidMount() {
     const cars = await getCars();
-    console.log(cars);
     this.setState({ cars });
+    const address = localStorage.getItem('address');
+    const user = await getUser(address);
+    console.log(user);
+    const { role } = user;
+    this.setState({role});
   }
 
   rentCar = async (idCar) => {
@@ -25,11 +32,26 @@ class Rent extends Component {
     this.setState({ cars });
   }
 
+  createCar = async() => {
+    const address = localStorage.getItem('address');
+    const { createCarModel, createCarMileage } = this.state;
+    await createCar(address, createCarModel, createCarMileage);
+    const cars = await getCars();
+    this.setState({ cars });
+  }
+
   render() {
-    const { cars } = this.state;
+    const { cars, role, createCarModel, createCarMileage } = this.state;
     
     return (
       <div className="rent">
+        { role === '2' && 
+          <div>
+            <Input onChange={(e)=> { this.setState({createCarModel: e.target.value}); }} value={createCarModel} placeholder="модель"/>
+            <Input onChange={(e)=> { this.setState({createCarMileage: e.target.value}); }} value={createCarMileage} placeholder="пробег"/>
+            <Button onClick={this.createCar} type="primary" block>Добавить автомобиль</Button>
+          </div>
+        }
         {cars.map(({ model, mileage, isRent }, idCar) => {
           return (
             <div className="rent__car">

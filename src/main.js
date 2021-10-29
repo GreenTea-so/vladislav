@@ -10,6 +10,7 @@ import Registration from './components/registration/index';
 import Cabinet from './components/cabinet/index';
 import Header from './components/header';
 import Rent from './components/rent';
+import Admin from './components/admin';
 import './main.css';
 
 class Main extends Component {
@@ -32,7 +33,11 @@ class Main extends Component {
             </Route>
             <Route path="/rent">
               <Header />
-                <Rent />
+              <Rent />
+            </Route>
+            <Route path="/admin">
+              <Header />
+              <Admin />
             </Route>
           </Switch>
          </Router>
