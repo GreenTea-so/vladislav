@@ -3,6 +3,7 @@ import { Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { authorization } from '../../contract/helper';
+import Spinner from '../Spinner/index';
 import "./style.css";
 
 class Authorization extends Component {
@@ -12,15 +13,18 @@ class Authorization extends Component {
     this.state = {
       login: '',
       password: '',
+      spin: false,
     }
   }
 
   onSubmit = async () => {
     try {
+      this.setState({spin: true});
       const { login, password } = this.state;
       const address = await authorization(login, password);
       window.localStorage.setItem('address', address);
       window.location.href = '/cabinet';
+      this.setState({spin: false});
     }
     catch(e) {
       console.log(e);
@@ -28,7 +32,7 @@ class Authorization extends Component {
   }
 
   render() {
-    const { login, password } = this.state;
+    const { login, password, spin } = this.state;
 
     return (
       <div className="authorization">
@@ -46,6 +50,7 @@ class Authorization extends Component {
         />
         <Button onClick={this.onSubmit} type="primary" block>Authorization</Button>
         <Link to="registration">Зарегистрироваться</Link>
+        {spin && <Spinner />}
       </div>
     );
   }

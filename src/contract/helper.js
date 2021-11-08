@@ -2,7 +2,7 @@ import Web3 from "web3"
 import abiArray from "./abi"
 
 const web3 = new Web3("http://127.0.0.1:8545")
-const Contract = new web3.eth.Contract(abiArray, "0x49658E43e040cc0f20c65b9EBd9967db8e766b82");
+const Contract = new web3.eth.Contract(abiArray, "0xE8cCDd99e2C4E6C6501f9eA001502783799Af0FA");
 
 const miner = '0x22E32984F35A8Cc9e4B79453870070298EAEeD87';
 const minerPassword = '123';
@@ -91,6 +91,7 @@ export const driveAdd = async (address, driveNumber, category, srok) => {
 export const createCar = async (address, model, mileage) => {
     try{
         await Contract.methods.createCar(model, mileage).send({from: address});
+        alert('Автомобиль создан');
     }
     catch(e){
         alert(e)

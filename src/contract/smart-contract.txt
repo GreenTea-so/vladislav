@@ -129,7 +129,7 @@ contract CarShering {
         users[cars[_idCar].trip.renter].trip.endTrip = block.timestamp;
         users[cars[_idCar].trip.renter].trip.isTrip = false;
         users[cars[_idCar].trip.renter].trips.push(users[msg.sender].trip);
-        delete trips[users[msg.sender].trip.idTrip];
+        delete trips[users[cars[_idCar].trip.renter].trip.idTrip];
     }
     
     function getTrips()public view returns(Trip[] memory) {

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Button, Input } from "antd";
 import { getCars, rentCar, getUser, createCar } from "../../contract/helper";
+import Spinner from '../Spinner/index';
 import './style.css';
 
 class Rent extends Component {
@@ -12,6 +13,7 @@ class Rent extends Component {
       role: 0,
       createCarMileage: '',
       createCarModel: '',
+      spin: false,
     };
   }
 
@@ -26,22 +28,24 @@ class Rent extends Component {
   }
 
   rentCar = async (idCar) => {
+    this.setState({spin: true});
     const address = localStorage.getItem('address');
     await rentCar(address, idCar);
     const cars = await getCars();
-    this.setState({ cars });
+    this.setState({ cars, spin: false });
   }
 
   createCar = async() => {
+    this.setState({spin: true});
     const address = localStorage.getItem('address');
     const { createCarModel, createCarMileage } = this.state;
     await createCar(address, createCarModel, createCarMileage);
     const cars = await getCars();
-    this.setState({ cars });
+    this.setState({ cars, spin: false });
   }
 
   render() {
-    const { cars, role, createCarModel, createCarMileage } = this.state;
+    const { cars, role, createCarModel, createCarMileage, spin } = this.state;
     
     return (
       <div className="rent">
@@ -62,6 +66,7 @@ class Rent extends Component {
             </div>
           );
         })}
+        {spin && <Spinner />}
       </div>
     );
   }

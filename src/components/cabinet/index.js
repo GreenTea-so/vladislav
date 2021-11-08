@@ -1,6 +1,7 @@
 import { Component, Fragment } from "react";
 import { Button, Modal, Select, Input, Calendar } from "antd";
 import { getUser, endRent, driveAdd } from "../../contract/helper";
+import Spinner from '../Spinner/index';
 import './style.css';
 
 const { Option } = Select;
@@ -26,6 +27,7 @@ class Cabinet extends Component {
       driveAddNumber: 0,
       driveAddCategory: 'A',
       driveAddSrok,
+      spin: false,
     };
     setInterval(() => { this.getTimeTrip() }, 1000);
   }
@@ -43,8 +45,10 @@ class Cabinet extends Component {
   }
 
   endRent = async (address, idCar) => {
+    this.setState({spin: true});
     await endRent(address, idCar);
     this.getUser();
+    this.setState({spin: false});
   }
 
   getTimeTrip = () => {
@@ -89,6 +93,7 @@ class Cabinet extends Component {
       driveAddNumber,
       driveAddCategory,
       driveAddSrok,
+      spin,
     } = this.state;
 
     const { isTrip, startTrip, idCar } = trip;
@@ -166,6 +171,7 @@ class Cabinet extends Component {
             </div>
           </div>
         </Modal>
+        {spin && <Spinner />}
       </div>
     );
   }
