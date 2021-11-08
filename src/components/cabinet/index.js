@@ -120,7 +120,7 @@ class Cabinet extends Component {
             </div>}
             <div className="cabinet__liccense">
               {drive_number === '' ? 
-                <Button type="primary" onClick={this.showModal}>
+                <Button className="cabinet__liccense-add" type="primary" onClick={this.showModal}>
                   Добавить водительское удостоверение
                 </Button>
                 : <Fragment>
