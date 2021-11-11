@@ -11,6 +11,7 @@ import Cabinet from './components/cabinet/index';
 import Header from './components/header';
 import Rent from './components/rent';
 import Admin from './components/admin';
+import Home from './components/Home';
 import './main.css';
 
 class Main extends Component {
@@ -38,6 +39,10 @@ class Main extends Component {
             <Route path="/admin">
               <Header />
               <Admin />
+            </Route>
+            <Route path="/home">
+              <Header />
+              <Home />
             </Route>
           </Switch>
          </Router>

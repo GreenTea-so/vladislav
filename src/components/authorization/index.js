@@ -20,10 +20,7 @@ class Authorization extends Component {
   onSubmit = async () => {
     try {
       this.setState({spin: true});
-      const { login, password } = this.state;
-      const address = await authorization(login, password);
-      window.localStorage.setItem('address', address);
-      window.location.href = '/cabinet';
+      window.location.href = '/home';
       this.setState({spin: false});
     }
     catch(e) {
@@ -40,15 +37,24 @@ class Authorization extends Component {
           onChange={(e)=> { this.setState({login: e.target.value}); }} 
           value={login} 
           size="large" 
-          placeholder="login" 
+          placeholder="Логин" 
           prefix={<UserOutlined />}
+          className="authorization__login"
         />
         <Input.Password
           onChange={(e)=> { this.setState({password: e.target.value}); }}
           value={password} 
-          placeholder="input password"
+          placeholder="Пароль"
+          className="authorization__password"
         />
-        <Button onClick={this.onSubmit} type="primary" block>Authorization</Button>
+        <Button 
+          onClick={this.onSubmit}
+          type="primary"
+          block
+          className="authorization__btn"
+        >
+          Авторизоваться
+        </Button>
         <Link to="registration">Зарегистрироваться</Link>
         {spin && <Spinner />}
       </div>

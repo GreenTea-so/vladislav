@@ -16,14 +16,6 @@ class Header extends Component {
     }
   }
 
-  async componentDidMount() {
-    const address = localStorage.getItem('address');
-    const user = await getUser(address);
-    console.log(user);
-    const { role } = user;
-    this.setState({role});
-  }
-
   setCurrent = (current) => {
     this.setState({ current });
   }
@@ -42,15 +34,16 @@ class Header extends Component {
       <div className="header">
         <div className="header__logo">
           <img className="header__logo_img" src={ logo } alt=""></img>
-          Carchering
+            Голосование
         </div>
         <div className="header__menu">
           <Link className="header__link" to="/cabinet">Личный кабинет</Link>
-          <Link className="header__link" to="/rent">Аренда</Link>
+          <Link className="header__link" to="/cabinet">Результаты голосований</Link>
+          <Link className="header__link" to="/rent">Админ панель</Link>
           {role === '2' && <Link className="header__link" to="/admin">Админ панель</Link>}
         </div>
         <Button onClick={this.logout} type="dashed" icon={<LoginOutlined />} size="large">
-          Logout
+          Выйти
         </Button>
       </div>
     );

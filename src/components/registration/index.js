@@ -61,25 +61,29 @@ class Registration extends Component {
               onChange={(e)=> { setFieldValue('login', e.target.value); }} 
               value={values.login} 
               size="large" 
-              placeholder="login" 
+              placeholder="Логин" 
               prefix={<UserOutlined />}
+              className="registration__login"
             />
             <Input 
               onChange={(e)=> { setFieldValue('FIO', e.target.value); }}
               value={values.FIO} 
               placeholder="ФИО"
+              className="registration__name"
             />
             <Input.Password
               onChange={(e)=> { setFieldValue('password', e.target.value); }}
               value={values.password} 
-              placeholder="input password"
+              placeholder="Пароль"
+              className="registration__password"
             />
             <Button
               type="primary" 
               block
               htmlType="submit"
+              className="registration__btn"
             >
-              Registation
+              Зарегистрироваться
             </Button>
             <Link to="authorization">Авторизоваться</Link>
             {errors.login && <div>{errors.login}</div>}
