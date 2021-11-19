@@ -32,10 +32,11 @@ class Header extends Component {
 
     return (
       <div className="header">
-        <div className="header__logo">
+        <Link to="/home"><div className="header__logo">
           <img className="header__logo_img" src={ logo } alt=""></img>
             Голосование
         </div>
+        </Link>
         <div className="header__menu">
           <Link className="header__link" to="/cabinet">Личный кабинет</Link>
           <Link className="header__link" to="/cabinet">Результаты голосований</Link>

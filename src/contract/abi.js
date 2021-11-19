@@ -7,17 +7,12 @@ const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_model",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_mileage",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "login",
+				"type": "address"
 			}
 		],
-		"name": "createCar",
+		"name": "Auditor_change",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -26,16 +21,11 @@ const abi = [
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_login",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_name",
+				"name": "email",
 				"type": "string"
 			}
 		],
-		"name": "createUser",
+		"name": "Change_email",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -44,42 +34,308 @@ const abi = [
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_drive_number",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_srok",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_category",
+				"name": "name",
 				"type": "string"
 			}
 		],
-		"name": "drive_add",
+		"name": "Change_name",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "login",
+				"type": "address"
+			}
+		],
+		"name": "EC_change",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "EC_check",
 		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "voting",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "choice",
+				"type": "bool"
+			}
+		],
+		"name": "EC_vote",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "question",
+				"type": "string"
+			}
+		],
+		"name": "EC_voting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "Get_voting_info",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "voters_type",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "agreements",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "disagreements",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address[]",
+				"name": "logins",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "Get_voting_results",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "agreements",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "disagreements",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "open_voting",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "ec_voting",
+				"type": "bool"
+			}
+		],
+		"name": "Get_votings",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "questions_list",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "id_list",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "question",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "open_voting",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "time",
+				"type": "uint256"
+			}
+		],
+		"name": "New_voting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			}
+		],
+		"name": "Registration",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "login",
+				"type": "address"
+			}
+		],
+		"name": "Role_change",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "login",
+				"type": "address"
+			}
+		],
+		"name": "User_role",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "role",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "voting",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "choice",
+				"type": "bool"
+			}
+		],
+		"name": "Vote",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
+		"name": "Votings",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "question",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "open_voting",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "ec_voting",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "voters",
+				"type": "string"
+			},
 			{
 				"internalType": "uint256",
-				"name": "_idCar",
+				"name": "time",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "agreements_quantity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "disagreements_quantity",
 				"type": "uint256"
 			}
 		],
-		"name": "endRent",
-		"outputs": [],
-		"stateMutability": "payable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -103,253 +359,47 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "getCars",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "model",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "mileage",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "isRent",
-						"type": "bool"
-					},
-					{
-						"components": [
-							{
-								"internalType": "address",
-								"name": "renter",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
-								"name": "idTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "idCar",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "startTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "endTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "bool",
-								"name": "isTrip",
-								"type": "bool"
-							}
-						],
-						"internalType": "struct CarShering.Trip",
-						"name": "trip",
-						"type": "tuple"
-					}
-				],
-				"internalType": "struct CarShering.Car[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getTrips",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "renter",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "idTrip",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "idCar",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "startTrip",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "endTrip",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "isTrip",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct CarShering.Trip[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "getUser",
 		"outputs": [
 			{
 				"components": [
 					{
 						"internalType": "string",
-						"name": "login",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
 						"name": "name",
 						"type": "string"
 					},
 					{
-						"internalType": "uint256",
+						"internalType": "address",
+						"name": "login",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "email",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
 						"name": "role",
-						"type": "uint256"
+						"type": "string"
 					},
 					{
-						"components": [
-							{
-								"internalType": "string",
-								"name": "drive_number",
-								"type": "string"
-							},
-							{
-								"internalType": "uint256",
-								"name": "srok",
-								"type": "uint256"
-							},
-							{
-								"internalType": "string",
-								"name": "category",
-								"type": "string"
-							}
-						],
-						"internalType": "struct CarShering.License",
-						"name": "license",
-						"type": "tuple"
+						"internalType": "bool",
+						"name": "EC",
+						"type": "bool"
 					},
 					{
-						"components": [
-							{
-								"internalType": "address",
-								"name": "renter",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
-								"name": "idTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "idCar",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "startTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "endTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "bool",
-								"name": "isTrip",
-								"type": "bool"
-							}
-						],
-						"internalType": "struct CarShering.Trip",
-						"name": "trip",
-						"type": "tuple"
-					},
-					{
-						"components": [
-							{
-								"internalType": "address",
-								"name": "renter",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
-								"name": "idTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "idCar",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "startTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "endTrip",
-								"type": "uint256"
-							},
-							{
-								"internalType": "bool",
-								"name": "isTrip",
-								"type": "bool"
-							}
-						],
-						"internalType": "struct CarShering.Trip[]",
-						"name": "trips",
-						"type": "tuple[]"
+						"internalType": "bool",
+						"name": "auditor",
+						"type": "bool"
 					}
 				],
-				"internalType": "struct CarShering.User",
+				"internalType": "struct Voting_system.User",
 				"name": "user",
 				"type": "tuple"
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idCar",
-				"type": "uint256"
-			}
-		],
-		"name": "rentCar",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	}
 ]

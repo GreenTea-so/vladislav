@@ -9,7 +9,7 @@ import Spinner from '../Spinner/index';
 import "./style.css";
 
 const schema = Yup.object().shape({
-  login: Yup.string()
+  email: Yup.string()
     .required()
     .min(3),
 });
@@ -26,8 +26,8 @@ class Registration extends Component {
 
   onSubmit = async (values) => {
     this.setState({spin: true});
-    const { login, FIO, password } = values;
-    await registration(login, FIO, password);
+    const { email, FIO, password } = values;
+    await registration(email, FIO, password);
     window.location.href = './authorization';
     this.setState({spin: false});
   }
@@ -38,7 +38,7 @@ class Registration extends Component {
       <Formik
         isSubmitting 
         initialValues={{
-          login: '',
+          email: '',
           FIO: '',
           password: '',
           againPassword: '',
@@ -58,10 +58,10 @@ class Registration extends Component {
           <Form>
           <div className="registration">
             <Input 
-              onChange={(e)=> { setFieldValue('login', e.target.value); }} 
-              value={values.login} 
+              onChange={(e)=> { setFieldValue('email', e.target.value); }} 
+              value={values.email} 
               size="large" 
-              placeholder="Логин" 
+              placeholder="e-mail" 
               prefix={<UserOutlined />}
               className="registration__login"
             />
@@ -86,7 +86,7 @@ class Registration extends Component {
               Зарегистрироваться
             </Button>
             <Link to="authorization">Авторизоваться</Link>
-            {errors.login && <div>{errors.login}</div>}
+            {errors.email && <div>{errors.email}</div>}
           </div>
           {spin && <Spinner />}
           </Form>

@@ -20,7 +20,13 @@ class Authorization extends Component {
   onSubmit = async () => {
     try {
       this.setState({spin: true});
-      window.location.href = '/home';
+      const { login, password } = this.state;
+      const address = await authorization(login, password);
+      console.log(address);
+      if (address) {
+        window.localStorage.setItem('address', address);
+        window.location.href = '/home';
+      }
       this.setState({spin: false});
     }
     catch(e) {
